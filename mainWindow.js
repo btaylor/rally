@@ -99,7 +99,9 @@ class MainWindow {
     }, true)
 
     this.browser.setAlwaysOnTop(true, 'floating')
-    this.browser.setWindowButtonVisibility(false)
+    this.browser.setVisibleOnAllWorkspaces(true)
+    this.browser.setFullScreenable(false)
+    this.browser.setWindowButtonVisibility(false);
     this.browser.setIgnoreMouseEvents(true)
 
     this.pictureInPicture = true
@@ -117,6 +119,8 @@ class MainWindow {
     }, true)
 
     this.browser.setAlwaysOnTop(false)
+    this.browser.setVisibleOnAllWorkspaces(false)
+    this.browser.setFullScreenable(true)
     this.browser.setWindowButtonVisibility(true)
     this.browser.setIgnoreMouseEvents(false)
 
