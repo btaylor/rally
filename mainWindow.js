@@ -1,5 +1,7 @@
 "use strict"
 
+const path = require('path')
+
 const { app, screen, Menu, BrowserWindow } = require('electron')
 
 const Light = require('./light.js')
@@ -22,7 +24,10 @@ class MainWindow {
       width: NORMAL_WINDOW_SIZE.width,
       height: NORMAL_WINDOW_SIZE.height,
       title: app.name,
-      titleBarStyle: 'hidden'
+      titleBarStyle: 'hidden',
+      webPreferences: {
+        preload: path.join(__dirname, 'preload.js')
+      }
     })
 
     this.browser.webContents.on('did-finish-load', () => {
