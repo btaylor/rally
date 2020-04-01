@@ -1,0 +1,14 @@
+{
+  "name": "rally",
+  "version": "0.0.1",
+  "main": "app.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^8.2.0"
+  },
+  "dependencies": {
+    "elgato-light-api": "^1.0.4"
+  }
+}
