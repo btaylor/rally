@@ -85,6 +85,15 @@ class MainWindow {
             click: () => this.toggleCamera()
           },
           { type: 'separator' },
+      {
+        label: 'View',
+        submenu: [
+          {
+            label: 'Toggle Grid',
+            accelerator: 'CmdOrCtrl+G',
+            click: () => this.toggleGrid()
+          },
+          { type: 'separator' },
           {
             label: 'Open Developer Tools',
             accelerator: 'CmdOrCtrl+Option+I',
@@ -138,6 +147,15 @@ class MainWindow {
       var leaveCallButton = document.querySelector('[aria-label="Leave call"]')
       if (leaveCallButton) {
         leaveCallButton.click()
+      }
+    `)
+  }
+
+  toggleGrid() {
+    this.browser.webContents.executeJavaScript(`
+      var toggleGridButton = document.querySelector('[aria-label="Toggle grid"]')
+      if (toggleGridButton) {
+        toggleGridButton.click()
       }
     `)
   }

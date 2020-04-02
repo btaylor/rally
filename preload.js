@@ -215,6 +215,7 @@ window.addEventListener('load', function() {
 
       // Add our button to to enable/disable the grid
       const toggleButton = document.createElement('div')
+      toggleButton.setAttribute('aria-label', 'Toggle grid')
       toggleButton.classList = buttons.children[1].classList
       toggleButton.classList.add('__gmgv-button')
       toggleButton.style.display = 'flex'
