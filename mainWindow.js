@@ -60,7 +60,7 @@ class MainWindow {
   }
 
   createMenu() {
-    let menu = Menu.buildFromTemplate([
+    let template = [
       { role: 'appMenu' },
       {
         label: 'Navigate',
@@ -72,9 +72,14 @@ class MainWindow {
           }
         ]
       }
-    ])
+    ]
 
-    Menu.setApplicationMenu(menu)
+    var pluginMenuItems = this.pluginManager.menuItems()
+    if (pluginMenuItems && pluginMenuItems.length > 0) {
+      template.push({ label: 'Plugins', submenu: pluginMenuItems })
+    }
+
+    Menu.setApplicationMenu(Menu.buildFromTemplate(template))
   }
 
   hasActiveCall() {

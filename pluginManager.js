@@ -9,6 +9,18 @@ class PluginManager {
     ]
   }
 
+  menuItems() {
+    let items = []
+    for (var i in this.plugins) {
+      var plugin = this.plugins[i]
+      if (plugin && plugin.menuItems) {
+        items = items.concat(plugin.menuItems())
+      }
+    }
+
+    return items
+  }
+
   beginActiveCall() {
     for (var i in this.plugins) {
       var plugin = this.plugins[i]

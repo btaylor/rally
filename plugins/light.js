@@ -38,6 +38,16 @@ class LightPlugin {
     this.light = new Light()
   }
 
+  menuItems() {
+    return [
+      { 
+        label: 'Toggle lights',
+        accelerator: 'CmdOrCtrl+O',
+        click: () => { this.light.toggle() }
+      }
+    ]
+  }
+
   beginActiveCall() {
     this.light.on()
   }
