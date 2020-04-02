@@ -4,7 +4,7 @@ const path = require('path')
 
 const { app, screen, Menu, BrowserWindow } = require('electron')
 
-const Light = require('./light.js')
+const PluginManager = require('./pluginManager.js')
 
 const NORMAL_WINDOW_SIZE = { width: 1778, height: 1000 }
 
@@ -14,7 +14,7 @@ const PIP_INSETS = { x: 25, y: 25 }
 class MainWindow {
   constructor() {
     this.browser = null
-    this.light = new Light()
+    this.pluginManager = new PluginManager()
 
     this.pictureInPicture = false
   }
@@ -32,15 +32,15 @@ class MainWindow {
 
     this.browser.webContents.on('did-finish-load', () => {
       if (this.hasActiveCall()) {
-        this.light.on()
+        this.pluginManager.beginActiveCall()
         return
       }
 
-      this.light.off()
+      this.pluginManager.endActiveCall()
     })
 
     this.browser.on('close', () => {
-      this.light.off()
+      this.pluginManager.appClosed()
     })
 
     this.browser.on('blur', () => {
@@ -69,16 +69,6 @@ class MainWindow {
             label: 'Back to Lobby',
             accelerator: 'CmdOrCtrl+L',
             click: () => { this.navigateToLobby() }
-          }
-        ]
-      },
-      {
-        label: 'Lights',
-        submenu: [
-          {
-            label: 'Toggle lights',
-            accelerator: 'CmdOrCtrl+O',
-            click: () => { this.light.toggle() }
           }
         ]
       }

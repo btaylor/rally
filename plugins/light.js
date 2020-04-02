@@ -33,4 +33,18 @@ class Light {
   }
 }
 
-module.exports = Light
+class LightPlugin {
+  constructor() {
+    this.light = new Light()
+  }
+
+  beginActiveCall() {
+    this.light.on()
+  }
+
+  endActiveCall() {
+    this.light.off()
+  }
+}
+
+module.exports = LightPlugin
