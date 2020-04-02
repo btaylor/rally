@@ -63,17 +63,8 @@ class MainWindow {
     let template = [
       { role: 'appMenu' },
       {
-        label: 'Video',
+        label: 'Call',
         submenu: [
-          {
-            label: 'Leave Call',
-            accelerator: 'CmdOrCtrl+L',
-            click: () => {
-              this.leaveCall()
-              setTimeout(() => this.home(), 2000)
-            }
-          },
-          { type: 'separator' },
           {
             label: 'Toggle Mute',
             accelerator: 'CmdOrCtrl+Shift+D',
@@ -85,6 +76,21 @@ class MainWindow {
             click: () => this.toggleCamera()
           },
           { type: 'separator' },
+          {
+            label: 'Leave Call',
+            accelerator: 'CmdOrCtrl+L',
+            click: () => {
+              if (!this.hasActiveCall()) {
+                this.home()
+                return
+              }
+
+              this.leaveCall()
+              setTimeout(() => this.home(), 2000)
+            }
+          },
+        ]
+      },
       {
         label: 'View',
         submenu: [
