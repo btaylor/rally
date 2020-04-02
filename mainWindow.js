@@ -2,7 +2,7 @@
 
 const path = require('path')
 
-const { app, screen, Menu, BrowserWindow } = require('electron')
+const { app, screen, globalShortcut, Menu, BrowserWindow } = require('electron')
 
 const PluginManager = require('./pluginManager.js')
 
@@ -41,6 +41,8 @@ class MainWindow {
 
     this.browser.on('close', () => {
       this.pluginManager.appClosed()
+
+      this.unregisterGlobalKeyboardShortcut()
     })
 
     this.browser.on('blur', () => {
@@ -57,6 +59,8 @@ class MainWindow {
     this.navigateToLobby()
 
     this.createMenu()
+
+    this.registerGlobalKeyboardShortcut()
   }
 
   createMenu() {
@@ -69,6 +73,14 @@ class MainWindow {
             label: 'Back to Lobby',
             accelerator: 'CmdOrCtrl+L',
             click: () => { this.navigateToLobby() }
+          },
+          {
+            label: 'Open Developer Tools',
+            accelerator: 'CmdOrCtrl+Option+I',
+            click: () => {
+              console.log("Open Developer Tools")
+              this.browser.webContents.openDevTools()
+            }
           }
         ]
       }
@@ -82,9 +94,36 @@ class MainWindow {
     Menu.setApplicationMenu(Menu.buildFromTemplate(template))
   }
 
+  registerGlobalKeyboardShortcut() {
+    const ret = globalShortcut.register('CmdOrCtrl+Shift+D', () => {
+      this.toggleMute()
+    })
+
+    if (!ret) {
+      console.warn('WARN: Registration of global keyboard shortcut (CmdOrCtrl+Shift+D) failed')
+    }
+  }
+
+  unregisterGlobalKeyboardShortcut() {
+    globalShortcut.unregisterAll()
+  }
+
   hasActiveCall() {
     return this.browser.getURL()
                        .match(/https:\/\/meet\.google\.com\/(_meet\/)?\w+-\w+-\w+/)
+  }
+
+  toggleMute() {
+    this.browser.webContents.executeJavaScript(`
+      var offButton = document.querySelector('[aria-label="Turn off microphone (⌘ + d)"]')
+      var onButton = document.querySelector('[aria-label="Turn on microphone (⌘ + d)"]')
+
+      if (offButton) {
+        offButton.click()
+      } else if (onButton) {
+        onButton.click()
+      }
+    `)
   }
 
   presentPictureInPicture() {
