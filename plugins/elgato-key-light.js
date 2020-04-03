@@ -2,7 +2,7 @@
 
 const elgato = require('elgato-light-api')
 
-class Light {
+class ElgatoKeyLight {
   constructor() {
     this.light = new elgato.ElgatoLightAPI()
   }
@@ -33,9 +33,9 @@ class Light {
   }
 }
 
-class LightPlugin {
+class ElgatoKeyLightPlugin {
   constructor() {
-    this.light = new Light()
+    this.light = new ElgatoKeyLight()
   }
 
   menuItems() {
@@ -57,4 +57,4 @@ class LightPlugin {
   }
 }
 
-module.exports = LightPlugin
+module.exports = ElgatoKeyLightPlugin
