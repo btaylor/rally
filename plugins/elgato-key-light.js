@@ -41,7 +41,7 @@ class ElgatoKeyLightPlugin {
   menuItems() {
     return [
       { 
-        label: 'Toggle lights',
+        label: 'Toggle Lights',
         accelerator: 'CmdOrCtrl+O',
         click: () => { this.light.toggle() }
       }
