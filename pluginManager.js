@@ -1,11 +1,13 @@
 "use strict"
 
 const ElgatoKeyLightPlugin = require('./plugins/elgato-key-light.js')
+const SpotifyPlugin = require('./plugins/spotify.js')
 
 class PluginManager {
   constructor() {
     this.plugins = [
-      new ElgatoKeyLightPlugin()
+      new ElgatoKeyLightPlugin(),
+      new SpotifyPlugin()
     ]
   }
 

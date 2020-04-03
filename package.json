@@ -9,6 +9,7 @@
     "electron": "^8.2.0"
   },
   "dependencies": {
-    "elgato-light-api": "^1.0.4"
+    "elgato-light-api": "^1.0.4",
+    "spotify-node-applescript": "^1.1.1"
   }
 }
