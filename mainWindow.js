@@ -2,7 +2,7 @@
 
 const path = require('path')
 
-const { app, screen, Menu, BrowserWindow } = require('electron')
+const { app, screen, shell, Menu, BrowserWindow } = require('electron')
 
 const PluginManager = require('./pluginManager.js')
 
@@ -95,6 +95,11 @@ class MainWindow {
         label: 'View',
         submenu: [
           {
+            label: 'Open Attachment',
+            accelerator: 'CmdOrCtrl+A',
+            click: () => this.openFirstAttachment()
+          },
+          {
             label: 'Toggle Grid',
             accelerator: 'CmdOrCtrl+G',
             click: () => this.toggleGrid()
@@ -168,6 +173,45 @@ class MainWindow {
         toggleGridButton.click()
       }
     `)
+  }
+
+  openFirstAttachment() {
+    this.browser.webContents.executeJavaScript(`
+      new Promise((resolve) => {
+        var detailsButton = document.querySelector('[aria-label$="This meeting has attachments."]')
+        if (!detailsButton) {
+          resolve()
+          return
+        }
+
+        detailsButton.click()
+        setTimeout(() => resolve(), 200)
+      }).then(() => {
+        return new Promise((resolve) => {
+          var attachmentsContainer = document.querySelector('[aria-label="Attachments"]')
+          if (!attachmentsContainer) {
+            resolve()
+            return
+          }
+
+          var attachment = attachmentsContainer.querySelector('[data-file-url]')
+          var fileURL = attachment.getAttribute('data-file-url')
+          setTimeout(() => resolve(fileURL), 300)
+        })
+      }).then((fileURL) => {
+        var detailsButton = document.querySelector('[aria-label$="This meeting has attachments."]')
+        if (detailsButton) {
+          detailsButton.click()
+        }
+        return fileURL;
+      })
+    `).then((fileURL) => {
+      if (!fileURL) {
+        return
+      }
+
+      shell.openExternal(fileURL)
+    })
   }
 
   home() {
