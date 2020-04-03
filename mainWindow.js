@@ -194,8 +194,8 @@ class MainWindow {
     let workArea = display.workArea
 
     this.browser.setBounds({
-      x: Math.floor(workArea.x + (workArea.width / 2) - (NORMAL_WINDOW_SIZE.width / 2)),
-      y: Math.floor(workArea.y + (workArea.height / 2) - (NORMAL_WINDOW_SIZE.height / 2)),
+      x: Math.round((workArea.width / 2) - (NORMAL_WINDOW_SIZE.width / 2) + workArea.x),
+      y: Math.round((workArea.height / 2) - (NORMAL_WINDOW_SIZE.height / 2) + workArea.y + 20),
       width: NORMAL_WINDOW_SIZE.width,
       height: NORMAL_WINDOW_SIZE.height
     }, true)
