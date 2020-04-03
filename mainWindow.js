@@ -45,7 +45,7 @@ class MainWindow {
 
     this.browser.on('blur', () => {
       // Animate to PIP only if there's an active call
-      if (this.hasActiveCall()) {
+      if (this.hasActiveCall() && !this.isDevToolsOpened()) {
         this.presentPictureInPicture()
       }
     })
@@ -120,6 +120,10 @@ class MainWindow {
   hasActiveCall() {
     return this.browser.getURL()
                        .match(/https:\/\/meet\.google\.com\/(_meet\/)?\w+-\w+-\w+/)
+  }
+
+  isDevToolsOpened() {
+    return this.browser.webContents.isDevToolsOpened()
   }
 
   toggleMute() {
