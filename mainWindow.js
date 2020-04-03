@@ -185,7 +185,6 @@ class MainWindow {
     this.browser.setVisibleOnAllWorkspaces(true)
     this.browser.setFullScreenable(false)
     this.browser.setWindowButtonVisibility(false);
-    this.browser.setIgnoreMouseEvents(false)
 
     this.pictureInPicture = true
   }
@@ -205,7 +204,6 @@ class MainWindow {
     this.browser.setVisibleOnAllWorkspaces(false)
     this.browser.setFullScreenable(true)
     this.browser.setWindowButtonVisibility(true)
-    this.browser.setIgnoreMouseEvents(false)
 
     this.pictureInPicture = false
   }
