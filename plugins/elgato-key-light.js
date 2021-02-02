@@ -12,12 +12,31 @@ class ElgatoKeyLight {
   }
 
   on() {
+    if (this.light.keyLights.length === 0) {
+      return
+    }
+
+    let currentDate = new Date()
+    let hours = currentDate.getHours()
+
+    let brightness = 100
+
+    if (hours > 14) {
+      brightness = 50
+    } else if (hours > 19) {
+      brightness = 30
+    }
+
     this.light.updateLightOptions(this.light.keyLights[0], {
-      numberOfLights: 1, lights: [ { on: 1 } ]
+      numberOfLights: 1, lights: [ { on: 1, brightness: brightness } ]
     })
   }
 
   off() {
+    if (this.light.keyLights.length === 0) {
+      return
+    }
+
     this.light.updateLightOptions(this.light.keyLights[0], {
       numberOfLights: 1, lights: [ { on: 0 } ]
     })
