@@ -243,7 +243,7 @@ class MainWindow {
 
     this.browser.setBounds({
       x: Math.round((workArea.width / 2) - (NORMAL_WINDOW_SIZE.width / 2) + workArea.x),
-      y: Math.round((workArea.height / 2) - (NORMAL_WINDOW_SIZE.height / 2) + workArea.y + 20),
+      y: Math.round((workArea.height / 2) - (NORMAL_WINDOW_SIZE.height / 2) + workArea.y - 13),
       width: NORMAL_WINDOW_SIZE.width,
       height: NORMAL_WINDOW_SIZE.height
     }, true)
