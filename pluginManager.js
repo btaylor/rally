@@ -2,12 +2,14 @@
 
 const ElgatoKeyLightPlugin = require('./plugins/elgato-key-light.js')
 const SpotifyPlugin = require('./plugins/spotify.js')
+const LifxPlugin = require('./plugins/lifx.js')
 
 class PluginManager {
   constructor() {
     this.plugins = [
       new ElgatoKeyLightPlugin(),
-      new SpotifyPlugin()
+      new SpotifyPlugin(),
+      new LifxPlugin()
     ]
   }
 
