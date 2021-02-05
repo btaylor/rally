@@ -97,6 +97,7 @@ class MainWindow {
           },
         ]
       },
+      { role: 'editMenu' },
       {
         label: 'View',
         submenu: [
