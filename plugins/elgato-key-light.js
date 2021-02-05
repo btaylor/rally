@@ -23,7 +23,7 @@ class ElgatoKeyLight {
 
     if (hours > 14) {
       brightness = 50
-    } else if (hours > 19) {
+    } else if (hours > 18) {
       brightness = 30
     }
 
