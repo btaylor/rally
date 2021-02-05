@@ -4,7 +4,7 @@
   "main": "app.js",
   "scripts": {
     "start": "electron .",
-    "pack:mac": "electron-packager . --out=dist/mac/ --platform=darwin --arch=x64 --icon=icons/rally_white.icns"
+    "pack:mac": "electron-packager . --prune --out=dist/mac/ --platform=darwin --arch=x64 --icon=icons/rally.icns --overwrite --prune --ignore=\"/dist/mac\" --ignore=\"node_modules/(electron-packager|path)\""
   },
   "devDependencies": {
     "electron": "^9.4.0",
