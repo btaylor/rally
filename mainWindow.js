@@ -39,6 +39,12 @@ class MainWindow {
       this.pluginManager.endActiveCall()
     })
 
+    this.browser.webContents.on('new-window', (err, url) => {
+      err.preventDefault()
+
+      shell.openExternal(url)
+    })
+
     this.browser.on('close', () => {
       this.pluginManager.appClosed()
     })
