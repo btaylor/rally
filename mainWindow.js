@@ -16,6 +16,7 @@ class MainWindow {
     this.browser = null
     this.pluginManager = new PluginManager()
 
+    this.teleprompterMode = false
     this.pictureInPicture = false
   }
 
@@ -30,7 +31,17 @@ class MainWindow {
       }
     })
 
+    this.updateWindowPosition()
+
+    screen.on('display-added', () => this.updateWindowPosition())
+    screen.on('display-removed', () => this.updateWindowPosition())
+    screen.on('display-metrics-changed', () => this.updateWindowPosition())
+
     this.browser.webContents.on('did-finish-load', () => {
+      if (this.teleprompterMode) { 
+        this.browser.webContents.insertCSS('html { transform: scaleX(-1) }')
+      }
+
       if (this.hasActiveCall()) {
         this.pluginManager.beginActiveCall()
         return
@@ -50,6 +61,11 @@ class MainWindow {
     })
 
     this.browser.on('blur', () => {
+      if (this.teleprompterMode) {
+        this.positionTeleprompter()
+        return
+      }
+
       // Animate to PIP only if there's an active call
       if (this.hasActiveCall() && !this.isDevToolsOpened()) {
         this.presentPictureInPicture()
@@ -57,6 +73,11 @@ class MainWindow {
     })
 
     this.browser.on('focus', () => {
+      if (this.teleprompterMode) {
+        this.positionTeleprompter()
+        return
+      }
+
       this.dismissPictureInPicture()
     })
 
@@ -225,7 +246,43 @@ class MainWindow {
     this.browser.loadURL('https://meet.google.com')
   }
 
+  updateWindowPosition() {
+    const displays = screen.getAllDisplays()
+    const teleprompter = displays.find((d) => {
+      return d.bounds.width === 1116 && d.bounds.height === 756
+    })
+
+    if (teleprompter) {
+      this.teleprompterMode = true
+      this.pictureInPicture = false
+      this.browser.setBounds(teleprompter.bounds)
+
+      this.browser.setAlwaysOnTop(false)
+      this.browser.setVisibleOnAllWorkspaces(false)
+      this.browser.setFullScreenable(true)
+      this.browser.setWindowButtonVisibility(true)
+    } else {
+      this.teleprompterMode = false
+
+      if (this.pictureInPicture) {
+        this.presentPictureInPicture()
+      } else {
+        this.dismissPictureInPicture()
+      }
+    }
+
+    // If we're not in a call, reload the page
+    // so that we can flip the screen if needed
+    if (!this.hasActiveCall()) {
+      this.browser.webContents.reload()
+    }
+  }
+
   presentPictureInPicture() {
+    if (this.teleprompterMode) {
+      return
+    }
+    
     let display = screen.getDisplayNearestPoint(this.browser.getBounds())
     let workArea = display.workArea
 
@@ -245,6 +302,10 @@ class MainWindow {
   }
 
   dismissPictureInPicture() {
+    if (this.teleprompterMode) {
+      return
+    }
+    
     let display = screen.getDisplayNearestPoint(this.browser.getBounds())
     let workArea = display.workArea
 
