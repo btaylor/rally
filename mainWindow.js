@@ -62,7 +62,7 @@ class MainWindow {
 
     this.browser.on('blur', () => {
       if (this.teleprompterMode) {
-        this.positionTeleprompter()
+        this.updateWindowPosition()
         return
       }
 
@@ -74,7 +74,7 @@ class MainWindow {
 
     this.browser.on('focus', () => {
       if (this.teleprompterMode) {
-        this.positionTeleprompter()
+        this.updateWindowPosition()
         return
       }
 
