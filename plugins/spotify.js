@@ -13,6 +13,11 @@ class SpotifyPlugin {
 
   beginActiveCall() {
     spotify.getState((err, state) => {
+      if (state === undefined) {
+        console.error('SpotifyPlugin: error: state could not be determined')
+        return
+      }
+
       this.previouslyPaused = (state.state === 'playing')
       if (this.previouslyPaused) {
         spotify.pause()
