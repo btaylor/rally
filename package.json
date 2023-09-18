@@ -7,7 +7,7 @@
     "pack:mac": "electron-packager . --prune --out=dist/mac/ --platform=darwin --arch=x64 --icon=icons/rally.icns --overwrite --prune --ignore=\"/dist/mac\" --ignore=\"node_modules/(electron-packager|path)\""
   },
   "devDependencies": {
-    "electron": "^22.3.21",
+    "electron": "^22.3.24",
     "electron-packager": "^17.1.1"
   },
   "dependencies": {
