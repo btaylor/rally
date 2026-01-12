@@ -4,7 +4,7 @@ const elgato = require('elgato-light-api')
 
 class ElgatoKeyLight {
   constructor() {
-    this.light = new elgato.ElgatoLightAPI()
+    this.light = new elgato.ElgatoKeylightAPI()
   }
 
   get status() {
